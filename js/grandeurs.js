@@ -1,4 +1,4 @@
-window.onload = () => {
+export function afficherGrandeursCosmiques() {
   const lat = 43.6119;
   const lon = 3.8777;
   const date = new Date();
@@ -145,5 +145,4 @@ window.onload = () => {
     const décalage = longitude / 15;
     return (utc + décalage + 24) % 24;
   }
-};
-    
+}
