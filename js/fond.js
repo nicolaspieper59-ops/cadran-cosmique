@@ -1,20 +1,20 @@
-function calculerDépressionSolaire(date, latitude, longitude) {
+function calculerDépressionSolaire(date, lat, lon) {
   const rad = Math.PI / 180;
-  const jourJulien = date.getUTCDate() + (date.getUTCMonth() + 1) * 30.44;
-  const declinaison = 23.44 * Math.sin(rad * (360 / 365 * (jourJulien - 81)));
-  const heureSolaire = date.getUTCHours() + date.getUTCMinutes() / 60 + longitude / 15;
-  const angleHoraire = (heureSolaire - 12) * 15;
-  const altitude = Math.asin(
-    Math.sin(rad * latitude) * Math.sin(rad * declinaison) +
-    Math.cos(rad * latitude) * Math.cos(rad * declinaison) * Math.cos(rad * angleHoraire)
+  const j = date.getUTCDate() + (date.getUTCMonth() + 1) * 30.44;
+  const decl = 23.44 * Math.sin(rad * (360 / 365 * (j - 81)));
+  const hs = date.getUTCHours() + date.getUTCMinutes() / 60 + lon / 15;
+  const ah = (hs - 12) * 15;
+  const alt = Math.asin(
+    Math.sin(rad * lat) * Math.sin(rad * decl) +
+    Math.cos(rad * lat) * Math.cos(rad * decl) * Math.cos(rad * ah)
   );
-  return -altitude * (180 / Math.PI);
+  return -alt * (180 / Math.PI);
 }
 
-function couleurSelonDépression(depression) {
-  if (depression > 18) return "#000022";
-  if (depression > 12) return "#001144";
-  if (depression > 6)  return "#003366";
-  if (depression > 0)  return "#336699";
+function couleurSelonDépression(d) {
+  if (d > 18) return "#000022";
+  if (d > 12) return "#001144";
+  if (d > 6)  return "#003366";
+  if (d > 0)  return "#336699";
   return "#88ccff";
-    }
+}
