@@ -2,119 +2,28 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Cadran Cosmique</title>
-  <style>
-    body {
-      background-color: #000;
-      color: #fff;
-      font-family: 'Courier New', monospace;
-      text-align: center;
-      padding-top: 30px;
-    }
-    canvas {
-      border: 2px solid #fff;
-      display: block;
-      margin: auto;
-      background-color: #000;
-    }
-  </style>
+  <title>Cockpit Cosmique</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <h1>Cadran Cosmique</h1>
-  <canvas id="cadran-cosmique" width="240" height="240"></canvas>
+  <canvas id="cadran-cosmique" width="320" height="320"></canvas>
 
-  <script>
-    // Fond évolutif selon la dépression solaire
-    function calculerDépressionSolaire(date, latitude, longitude) {
-      const rad = Math.PI / 180;
-      const jourJulien = date.getUTCDate() + (date.getUTCMonth() + 1) * 30.44;
-      const declinaison = 23.44 * Math.sin(rad * (360 / 365 * (jourJulien - 81)));
-      const heureSolaire = date.getUTCHours() + date.getUTCMinutes() / 60 + longitude / 15;
-      const angleHoraire = (heureSolaire - 12) * 15;
-      const altitude = Math.asin(
-        Math.sin(rad * latitude) * Math.sin(rad * declinaison) +
-        Math.cos(rad * latitude) * Math.cos(rad * declinaison) * Math.cos(rad * angleHoraire)
-      );
-      return -altitude * (180 / Math.PI);
-    }
+  <section id="grandeurs">
+    <div id="vitesse"></div>
+    <div id="distance"></div>
+    <div id="temps"></div>
+    <div id="capteurs"></div>
+    <div id="gps"></div>
+    <div id="mode-souterrain"></div>
+  </section>
 
-    function couleurSelonDépression(depression) {
-      if (depression > 18) return "#000022";
-      if (depression > 12) return "#001144";
-      if (depression > 6)  return "#003366";
-      if (depression > 0)  return "#336699";
-      return "#88ccff";
-    }
-
-    // Projection simplifiée RA/Dec → x/y
-    function projeter(ra, dec, canvasWidth, canvasHeight) {
-      const x = canvasWidth / 2 + (ra - 12) * 10;
-      const y = canvasHeight / 2 - dec * 2;
-      return { x, y };
-    }
-
-    // Exemple de constellation embarquée
-    const constellations = [
-      {
-        name: "Orion",
-        abbreviation: "Ori",
-        stars: [
-          { id: "Betelgeuse", ra: 5.9195, dec: 7.4071, magnitude: 0.42 },
-          { id: "Rigel", ra: 5.2423, dec: -8.2016, magnitude: 0.13 },
-          { id: "Bellatrix", ra: 5.4189, dec: 6.3497, magnitude: 1.64 }
-        ],
-        lines: [
-          { start: "Betelgeuse", end: "Bellatrix" },
-          { start: "Bellatrix", end: "Rigel" }
-        ]
-      }
-    ];
-
-    function dessinerConstellations(ctx, canvasWidth, canvasHeight) {
-      constellations.forEach(c => {
-        const starMap = {};
-        c.stars.forEach(star => {
-          const { x, y } = projeter(star.ra, star.dec, canvasWidth, canvasHeight);
-          starMap[star.id] = { x, y };
-          const r = Math.max(0.5, 3 - star.magnitude);
-          ctx.beginPath();
-          ctx.arc(x, y, r, 0, 2 * Math.PI);
-          ctx.fillStyle = "#fff";
-          ctx.fill();
-        });
-
-        c.lines.forEach(line => {
-          const a = starMap[line.start];
-          const b = starMap[line.end];
-          if (a && b) {
-            ctx.beginPath();
-            ctx.moveTo(a.x, a.y);
-            ctx.lineTo(b.x, b.y);
-            ctx.strokeStyle = "#888";
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
-          }
-        });
-      });
-    }
-
-    function afficherCadran() {
-      const canvas = document.getElementById("cadran-cosmique");
-      const ctx = canvas.getContext("2d");
-      const latitude = 43.6119;
-      const longitude = 3.8777;
-      const now = new Date();
-      const depression = calculerDépressionSolaire(now, latitude, longitude);
-      const couleur = couleurSelonDépression(depression);
-
-      ctx.fillStyle = couleur;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      dessinerConstellations(ctx, canvas.width, canvas.height);
-    }
-
-    setInterval(afficherCadran, 60000);
-    window.onload = afficherCadran;
-  </script>
+  <script src="js/fond.js"></script>
+  <script src="js/unite-cosmique.js"></script>
+  <script src="js/connexion-alternative.js"></script>
+  <script src="js/mode-souterrain.js"></script>
+  <script src="js/horloge-minecraft.js"></script>
+  <script src="js/capteurs.js"></script>
+  <script src="js/gps.js"></script>
+  <script src="js/moteur.js"></script>
 </body>
 </html>
