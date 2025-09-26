@@ -3,5 +3,8 @@ export function horlogeMinecraft() {
   const h = now.getHours().toString().padStart(2, "0");
   const m = now.getMinutes().toString().padStart(2, "0");
   const s = now.getSeconds().toString().padStart(2, "0");
-  return `${h}:${m}:${s}`;
+  document.getElementById("temps").innerHTML = `
+    <h2>Horloge Minecraft</h2>
+    <p>${h}:${m}:${s}</p>
+  `;
 }
