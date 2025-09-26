@@ -8,6 +8,7 @@ canvas {
   border: 2px solid #fff;
   margin: 20px auto;
   display: block;
+  background-color: #000;
 }
 section#grandeurs {
   display: grid;
