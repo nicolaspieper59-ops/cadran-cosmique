@@ -5,7 +5,6 @@ async function chargerConstellations() {
 }
 
 function projeter(ra, dec, canvasWidth, canvasHeight) {
-  // Projection orthographique simplifiée
   const x = canvasWidth / 2 + (ra - 12) * 10;
   const y = canvasHeight / 2 - dec * 2;
   return { x, y };
@@ -42,12 +41,7 @@ function dessinerConstellations(ctx, constellations) {
   });
 }
 
-async function afficherConstellations() {
-  const canvas = document.getElementById("cadran-cosmique");
-  const ctx = canvas.getContext("2d");
+async function afficherConstellations(ctx) {
   const constellations = await chargerConstellations();
   dessinerConstellations(ctx, constellations);
 }
-
-window.onload = afficherConstellations;
-    
