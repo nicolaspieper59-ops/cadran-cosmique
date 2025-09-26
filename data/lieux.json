@@ -1,0 +1,54 @@
+{
+  "lieux": [
+    {
+      "id": "observatoire-pic-du-midi",
+      "nom": "Observatoire du Pic du Midi",
+      "type": "astronomique",
+      "latitude": 42.9367,
+      "longitude": 0.1425,
+      "altitude": 2877,
+      "rituel": "culmination solaire",
+      "souterrain": false
+    },
+    {
+      "id": "grotte-cosquer",
+      "nom": "Grotte Cosquer",
+      "type": "souterrain",
+      "latitude": 43.2110,
+      "longitude": 5.3580,
+      "altitude": -37,
+      "rituel": "activation infrarouge",
+      "souterrain": true
+    },
+    {
+      "id": "plateau-de-valensole",
+      "nom": "Plateau de Valensole",
+      "type": "naturel",
+      "latitude": 43.8333,
+      "longitude": 5.9833,
+      "altitude": 500,
+      "rituel": "résonance lunaire",
+      "souterrain": false
+    },
+    {
+      "id": "station-loRa-marseille",
+      "nom": "Station LoRa Marseille",
+      "type": "technique",
+      "latitude": 43.2965,
+      "longitude": 5.3698,
+      "altitude": 50,
+      "rituel": "connexion alternative",
+      "souterrain": true
+    },
+    {
+      "id": "temple-du-soleil",
+      "nom": "Temple du Soleil",
+      "type": "rituel",
+      "latitude": 44.0000,
+      "longitude": 4.0000,
+      "altitude": 800,
+      "rituel": "culmination solaire",
+      "souterrain": false
+    }
+  ]
+}
