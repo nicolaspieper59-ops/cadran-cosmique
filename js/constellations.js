@@ -1,47 +1,17 @@
-async function chargerConstellations() {
-  const response = await fetch("data/constellations.json");
-  const data = await response.json();
-  return data.constellations;
-}
-
-function projeter(ra, dec, canvasWidth, canvasHeight) {
-  const x = canvasWidth / 2 + (ra - 12) * 10;
-  const y = canvasHeight / 2 - dec * 2;
-  return { x, y };
-}
-
-function dessinerConstellations(ctx, constellations) {
-  const w = ctx.canvas.width;
-  const h = ctx.canvas.height;
-
-  constellations.forEach(c => {
-    const starMap = {};
-    c.stars.forEach(star => {
-      const { x, y } = projeter(star.ra, star.dec, w, h);
-      starMap[star.id] = { x, y };
-      const r = Math.max(0.5, 3 - star.magnitude);
-      ctx.beginPath();
-      ctx.arc(x, y, r, 0, 2 * Math.PI);
-      ctx.fillStyle = "#fff";
-      ctx.fill();
-    });
-
-    c.lines.forEach(line => {
-      const a = starMap[line.start];
-      const b = starMap[line.end];
-      if (a && b) {
-        ctx.beginPath();
-        ctx.moveTo(a.x, a.y);
-        ctx.lineTo(b.x, b.y);
-        ctx.strokeStyle = "#888";
-        ctx.lineWidth = 0.5;
-        ctx.stroke();
-      }
-    });
-  });
-}
-
-async function afficherConstellations(ctx) {
-  const constellations = await chargerConstellations();
-  dessinerConstellations(ctx, constellations);
+{
+  "constellations": [
+    {
+      "name": "Orion",
+      "abbreviation": "Ori",
+      "stars": [
+        { "id": "Betelgeuse", "ra": 5.9195, "dec": 7.4071, "magnitude": 0.42 },
+        { "id": "Rigel", "ra": 5.2423, "dec": -8.2016, "magnitude": 0.13 },
+        { "id": "Bellatrix", "ra": 5.4189, "dec": 6.3497, "magnitude": 1.64 }
+      ],
+      "lines": [
+        { "start": "Betelgeuse", "end": "Bellatrix" },
+        { "start": "Bellatrix", "end": "Rigel" }
+      ]
+    }
+  ]
 }
