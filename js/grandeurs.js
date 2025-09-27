@@ -144,5 +144,44 @@ export function afficherGrandeursCosmiques() {
     const utc = date.getUTCHours() + date.getUTCMinutes() / 60;
     const décalage = longitude / 15;
     return (utc + décalage + 24) % 24;
+    let vitesseActive = true;
+let vmax = 0;
+
+document.getElementById("toggle-vitesse").onclick = () => {
+  vitesseActive = !vitesseActive;
+  document.getElementById("toggle-vitesse").textContent = vitesseActive ? "⏸️ Pause Vitesse" : "▶️ Reprendre Vitesse";
+  afficherVitesse();
+};
+
+document.getElementById("reset-vmax").onclick = () => {
+  vmax = 0;
+  afficherVitesse();
+};
+
+function afficherVitesse() {
+  if (!vitesseActive) {
+    document.getElementById("vitesse").innerHTML = `<h2>Vitesse</h2><p>⏸️ En pause</p>`;
+    return;
+  }
+
+  const vitesse = Math.random() * 100;
+  const vitesseMs = (vitesse / 3.6).toFixed(4);
+  const vitesseMm = (vitesseMs * 1000).toFixed(2);
+  const pourcentLumiere = ((vitesse / (299792.458 * 3.6)) * 100).toFixed(6);
+  const pourcentSon = ((vitesseMs / 343) * 100).toFixed(2);
+  vmax = Math.max(vmax, vitesse);
+
+  document.getElementById("vitesse").innerHTML = `
+    <h2>Vitesse</h2>
+    <p>Instantanée : ${vitesse.toFixed(4)} km/h</p>
+    <p>Moyenne : --</p>
+    <p>Max : ${vmax.toFixed(4)} km/h</p>
+    <p>m/s : ${vitesseMs}</p>
+    <p>mm/s : ${vitesseMm}</p>
+    <p>% lumière : ${pourcentLumiere} %</p>
+    <p>% son : ${pourcentSon} %</p>
+  `;
+    }
+                           
   }
 }
