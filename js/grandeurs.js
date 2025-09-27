@@ -3,27 +3,24 @@ export function afficherGrandeursCosmiques() {
   const lon = 3.8777;
   const date = new Date();
 
-  // Vitesse et distance
-  const vitesse = 0.0000;
-  const vitesseMoyenne = 0.0000;
-  const vitesseMax = 0.0000;
+  // Vitesse simulée
+  const vitesse = Math.random() * 100;
   const vitesseMs = (vitesse / 3.6).toFixed(4);
   const vitesseMm = (vitesseMs * 1000).toFixed(2);
-  const c = 299792.458; // km/s
-  const s = 343;        // m/s
-  const pourcentLumiere = ((vitesse / (c * 3.6)) * 100).toFixed(6);
-  const pourcentSon = ((vitesseMs / s) * 100).toFixed(2);
+  const pourcentLumiere = ((vitesse / (299792.458 * 3.6)) * 100).toFixed(6);
+  const pourcentSon = ((vitesseMs / 343) * 100).toFixed(2);
 
-  const distance = 0.0000;
+  // Distance simulée
+  const distance = Math.random() * 10000;
   const distanceM = distance.toFixed(2);
 
-  // Coordonnées et altitude
+  // Coordonnées Minecraft
   const altitude = 42.0;
   const coordX = 128;
   const coordY = Math.round(altitude);
   const coordZ = -64;
 
-  // Fréquence et capteurs
+  // Fréquence et champ magnétique
   const frequenceHz = (Math.random() * 100).toFixed(2);
   const champMagnetique = (Math.random() * 50).toFixed(2);
   const inclinaison = (Math.random() * 90).toFixed(2);
@@ -38,8 +35,6 @@ export function afficherGrandeursCosmiques() {
   document.getElementById("vitesse").innerHTML = `
     <h2>Vitesse</h2>
     <p>Instantanée : ${vitesse.toFixed(4)} km/h</p>
-    <p>Moyenne : ${vitesseMoyenne.toFixed(4)} km/h</p>
-    <p>Max : ${vitesseMax.toFixed(4)} km/h</p>
     <p>m/s : ${vitesseMs}</p>
     <p>mm/s : ${vitesseMm}</p>
     <p>% lumière : ${pourcentLumiere} %</p>
@@ -51,7 +46,7 @@ export function afficherGrandeursCosmiques() {
     <p>mètres : ${distanceM} m</p>
     <p>km : ${(distance / 1000).toFixed(4)}</p>
     <p>UA : ${(distance / 149597870700).toExponential(4)}</p>
-    <p>sec lumière : ${(distance / (c * 1000)).toFixed(4)}</p>
+    <p>sec lumière : ${(distance / (299792.458 * 1000)).toFixed(4)}</p>
     <p>année lumière : ${(distance / 9.4607e15).toExponential(4)}</p>
   `;
 
@@ -144,44 +139,6 @@ export function afficherGrandeursCosmiques() {
     const utc = date.getUTCHours() + date.getUTCMinutes() / 60;
     const décalage = longitude / 15;
     return (utc + décalage + 24) % 24;
-    let vitesseActive = true;
-let vmax = 0;
-
-document.getElementById("toggle-vitesse").onclick = () => {
-  vitesseActive = !vitesseActive;
-  document.getElementById("toggle-vitesse").textContent = vitesseActive ? "⏸️ Pause Vitesse" : "▶️ Reprendre Vitesse";
-  afficherVitesse();
-};
-
-document.getElementById("reset-vmax").onclick = () => {
-  vmax = 0;
-  afficherVitesse();
-};
-
-function afficherVitesse() {
-  if (!vitesseActive) {
-    document.getElementById("vitesse").innerHTML = `<h2>Vitesse</h2><p>⏸️ En pause</p>`;
-    return;
   }
-
-  const vitesse = Math.random() * 100;
-  const vitesseMs = (vitesse / 3.6).toFixed(4);
-  const vitesseMm = (vitesseMs * 1000).toFixed(2);
-  const pourcentLumiere = ((vitesse / (299792.458 * 3.6)) * 100).toFixed(6);
-  const pourcentSon = ((vitesseMs / 343) * 100).toFixed(2);
-  vmax = Math.max(vmax, vitesse);
-
-  document.getElementById("vitesse").innerHTML = `
-    <h2>Vitesse</h2>
-    <p>Instantanée : ${vitesse.toFixed(4)} km/h</p>
-    <p>Moyenne : --</p>
-    <p>Max : ${vmax.toFixed(4)} km/h</p>
-    <p>m/s : ${vitesseMs}</p>
-    <p>mm/s : ${vitesseMm}</p>
-    <p>% lumière : ${pourcentLumiere} %</p>
-    <p>% son : ${pourcentSon} %</p>
-  `;
-    }
-                           
-  }
-}
+      }
+      
